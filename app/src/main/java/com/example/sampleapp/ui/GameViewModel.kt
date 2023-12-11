@@ -19,4 +19,9 @@ class GameViewModel : ViewModel() {
     fun updateUserGuess(guessedNumber: String) {
         userGuess = guessedNumber
     }
+
+    fun getRandomNumber(): Int {
+
+        return (1..10).random()
+    }
 }
