@@ -4,7 +4,7 @@ import androidx.annotation.StringRes
 import com.example.sampleapp.R
 
 data class GameUiState(
-    val life: Int = 3,
-    @StringRes val hint: Int = R.string.blank,
+    val life: Int,
+    @StringRes val hint: Int,
     val numberToGuess: Int
 )

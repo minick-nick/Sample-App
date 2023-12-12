@@ -13,7 +13,13 @@ import kotlinx.coroutines.flow.update
 
 class GameViewModel : ViewModel() {
 
-    private val _uiState = MutableStateFlow(GameUiState(numberToGuess = getRandomNumber()))
+    private val _uiState = MutableStateFlow(
+        GameUiState(
+            life = 3,
+            hint = R.string.blank,
+            numberToGuess = getRandomNumber()
+        )
+    )
     val uiSate : StateFlow<GameUiState> = _uiState.asStateFlow()
 
     var userGuess by mutableStateOf("")
@@ -31,14 +37,23 @@ class GameViewModel : ViewModel() {
         val numberToGuess = _uiState.value.numberToGuess
         val guess = userGuess.toInt()
 
-        _uiState.update {
-            it.copy(
-                hint = when {
-                    guess == numberToGuess -> R.string.correct
-                    guess > numberToGuess -> R.string.too_high
-                    else -> R.string.too_low
-                }
-            )
+        if (_uiState.value.life > 0) {
+            _uiState.update {
+                it.copy(
+                    hint = when {
+                        guess == numberToGuess -> R.string.correct
+                        guess > numberToGuess -> R.string.too_high
+                        else -> R.string.too_low
+                    },
+                    life = _uiState.value.life.dec()
+                )
+            }    
+        } else {
+
         }
+    }
+
+    fun resetGame() {
+        
     }
 }
