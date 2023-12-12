@@ -6,5 +6,7 @@
     <string name="too_high">Too high</string>
     <string name="too_low">Too low</string>
     <string name="correct">Correct!</string>
+    <string name="game_over">Game over!</string>
+    <string name="play_again">Play again</string>
     <string name="blank"></string>
 </resources>

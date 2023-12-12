@@ -38,6 +38,7 @@ class GameViewModel : ViewModel() {
         val guess = userGuess.toInt()
 
         if (_uiState.value.life > 0) {
+            userGuess = "" // To reset TextField
             _uiState.update {
                 it.copy(
                     hint = when {
@@ -45,15 +46,18 @@ class GameViewModel : ViewModel() {
                         guess > numberToGuess -> R.string.too_high
                         else -> R.string.too_low
                     },
-                    life = _uiState.value.life.dec()
+                    life = it.life.dec(),
+                    isAnswerCorrect = guess == it.numberToGuess
                 )
             }    
-        } else {
-
         }
     }
 
     fun resetGame() {
-        
+        _uiState.value = GameUiState(
+            life = 3,
+            hint = R.string.blank,
+            numberToGuess = getRandomNumber()
+        )
     }
 }

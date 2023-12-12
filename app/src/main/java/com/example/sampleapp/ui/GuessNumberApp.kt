@@ -45,6 +45,15 @@ fun GuessNumberApp(
     ) {
         Text(text = stringResource(R.string.life, gameUiState.life))
         Text(text = stringResource(R.string.hint, stringResource(gameUiState.hint)))
+        if (gameUiState.life == 0) {
+            Text(
+                text = stringResource(R.string.game_over),
+                modifier = Modifier
+                    .padding(vertical = 20.dp)
+                    .fillMaxWidth()
+                    .wrapContentWidth(Alignment.CenterHorizontally)
+            )
+        }
         Row(
             horizontalArrangement = Arrangement.Center,
             modifier = Modifier
@@ -62,16 +71,33 @@ fun GuessNumberApp(
                 )
             )
         }
-        Button(
-            onClick = {
-                gameViewModel.checkAnswer()
-            },
-            modifier = Modifier
-                .padding(top = 30.dp)
-                .fillMaxWidth()
-                .wrapContentWidth(Alignment.CenterHorizontally)
-        ) {
-            Text(text = stringResource(R.string.Ok))
+
+
+        if (gameUiState.life == 0 || gameUiState.isAnswerCorrect) {
+            Button(
+                onClick = {
+                    gameViewModel.resetGame()
+                },
+                modifier = Modifier
+                    .padding(top = 30.dp)
+                    .fillMaxWidth()
+                    .wrapContentWidth(Alignment.CenterHorizontally)
+            ) {
+                Text(text = stringResource(R.string.play_again))
+            }
+        } else {
+            Button(
+                onClick = {
+                    gameViewModel.checkAnswer()
+                },
+                enabled = gameViewModel.userGuess.isNotEmpty(),
+                modifier = Modifier
+                    .padding(top = 30.dp)
+                    .fillMaxWidth()
+                    .wrapContentWidth(Alignment.CenterHorizontally)
+            ) {
+                Text(text = stringResource(R.string.Ok))
+            }
         }
     }
 }
